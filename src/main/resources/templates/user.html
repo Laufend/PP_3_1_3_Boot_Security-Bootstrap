@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/admin_panel.css}">
+    <title>User Page</title>
+</head>
+<body class="bg-light">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <p class="navbar-brand">
+            <b th:text="${userinfo.getUsername()}"></b>
+            <span> with roles: </span>
+            <th:block th:each="role:${userinfo.getAuthorities()}">
+                <span th:text="${role.toString()}"></span>
+            </th:block>
+        </p>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto logout">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="left-menu bg-white">
+        <ul class="list-group">
+            <a th:if="${roles.contains('ROLE_ADMIN')}" href="/admin" class="list-group-item list-group-item-action">Admin</a>
+            <a href="/user" class="list-group-item list-group-item-action active">User</a>
+        </ul>
+    </div>
+    <div class="main-part">
+        <h1>User information-page</h1>
+        <div class="about_user_container border" id="js-tab">
+            <h6>About user</h6>
+            <div class="about_user_container_table">
+                <table class="table table-striped caption-top">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Age</th>
+                        <th>Specialization</th>
+                        <th>Salary</th>
+                        <th>Roles</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${userinfo.getId()}">Id: </td>
+                        <td th:text="${userinfo.getName()}">Name: </td>
+                        <td th:text="${userinfo.getSurname()}">Surname: </td>
+                        <td th:text="${userinfo.getAge()}">Age: </td>
+                        <td th:text="${userinfo.getSpecialization()}">Specialization: </td>
+                        <td th:text="${userinfo.getSalary()}">Salary:</td>
+                        <td th:hidden="${userinfo.password}">Password: </td>
+                        <td> <th:block th:each="role:${userinfo.getAuthorities()}">
+                            <span th:text="${role.toString()}"></span>
+                        </th:block></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
