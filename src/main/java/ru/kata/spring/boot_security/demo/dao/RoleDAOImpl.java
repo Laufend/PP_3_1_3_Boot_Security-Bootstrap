@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entity.Role;
 
 import javax.persistence.EntityManager;
@@ -24,6 +25,12 @@ public class RoleDAOImpl implements RoleDAO {
                 .setParameter(1, nameRole)
                 .getResultList();
         return role.size() > 0 ? role.get(0) : setNewRole(nameRole);
+    }
+
+    @Override
+    @Transactional
+    public void addRole(Role role) {
+        entityManager.persist(role);
     }
 
 }

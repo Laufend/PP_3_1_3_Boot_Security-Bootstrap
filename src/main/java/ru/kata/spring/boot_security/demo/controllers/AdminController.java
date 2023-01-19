@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.ModelMap;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -16,12 +15,10 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -50,7 +47,7 @@ public class AdminController {
         return "delete_form";
     }
     @GetMapping("/delete")
-    public String deleteUser(@ModelAttribute User user, ModelMap model) {
+    public String deleteUser(@ModelAttribute User user) {
         userService.removeUser(user.getId());
         return "redirect:/admin";
     }
@@ -69,9 +66,8 @@ public class AdminController {
         return "edit";
     }
     @GetMapping("/update")
-    public String update(@ModelAttribute User user,
-                           ModelMap model) {
-        userService.updateUser(user.getId(), user);
+    public String update(@ModelAttribute User user) {
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 }
