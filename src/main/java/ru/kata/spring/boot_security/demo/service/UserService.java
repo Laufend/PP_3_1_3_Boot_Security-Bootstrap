@@ -18,8 +18,6 @@ public interface UserService {
 
         User updateUser(int id, User updated);
 
-        Optional<User> getUserByName(String name);
-
-        public List<Role> getAllRoles();
+        User getUserByName(String name);
 
 }

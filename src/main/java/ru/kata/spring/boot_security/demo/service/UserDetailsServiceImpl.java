@@ -1,35 +1,32 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.dao.UserDAO;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-
-import java.util.Optional;
-
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private UserDAO userDAO;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(name);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found!");
+        User user = userDAO.getUserByName(name);
+        if (user != null) {
+            return user;
+        } else {
+            throw new BadCredentialsException("Wrong username");
         }
-        return user.get();
     }
 }
