@@ -46,7 +46,7 @@ public class AdminController {
         model.addAttribute("userDelete", userService.getUserById(id));
         return "delete_form";
     }
-    @GetMapping("/delete")
+    @DeleteMapping("/{id}")
     public String deleteUser(@ModelAttribute User user) {
         userService.removeUser(user.getId());
         return "redirect:/admin";
@@ -65,7 +65,7 @@ public class AdminController {
         model.addAttribute("userUpdate", userService.getUserById(id));
         return "edit";
     }
-    @GetMapping("/update")
+    @PatchMapping("/{id}")
     public String update(@ModelAttribute User user) {
         userService.updateUser(user);
         return "redirect:/admin";

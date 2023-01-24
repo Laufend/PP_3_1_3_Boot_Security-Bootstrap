@@ -19,7 +19,7 @@
             </div>
             <div id="deleteFormContainer">
                 <div>
-                    <form id="editForm" action="/admin/delete" method="get" th:object="${userDelete}">
+                    <form id="editForm" th:action="@{/admin/{id}(id=${userDelete.getId()})}" th:method="delete" th:object="${userDelete}">
                         <input type="hidden" name="id" th:field="*{id}">
                         <div class="modal-body">
                             <div class="form-group">
